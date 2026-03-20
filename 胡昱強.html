@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>胡昱強 Johnny | 學習歷程作品集</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1A365D; /* 紺青：專業、冷靜 */
+            --light-blue: #EBF8FF;   /* 水色：清透、空間感 */
+            --accent-gold: #C5A059;  /* 蒔繪金：重點點綴 */
+            --bg-white: #F9FAFB;
+            --text-dark: #2D3748;
+            --border-gray: #E2E8F0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Serif TC', serif;
+        }
+
+        body {
+            background-color: var(--bg-white);
+            color: var(--text-dark);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* 日式青海波背景紋理 */
+        .seigaiha-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 10px 10px, rgba(26, 54, 93, 0.03) 2px, transparent 0);
+            background-size: 30px 30px;
+            z-index: -1;
+        }
+
+        /* 側邊裝飾文字 */
+        .vertical-text {
+            position: fixed;
+            right: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            writing-mode: vertical-rl;
+            letter-spacing: 0.8rem;
+            color: rgba(26, 54, 93, 0.08);
+            font-size: 4rem;
+            z-index: -1;
+            pointer-events: none;
+            font-weight: 700;
+        }
+
+        /* 導覽列 */
+        nav {
+            padding: 1.5rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: rgba(249, 250, 251, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--primary-blue);
+            letter-spacing: 0.2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            margin-left: 2rem;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        /* 主視覺區 */
+        header {
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            letter-spacing: 0.6rem;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        /* 內容區塊通用樣式 */
+        section {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 3rem;
+            background: white;
+            box-shadow: 10px 10px 0px rgba(26, 54, 93, 0.05); /* 日式框線感 */
+            border: 1px solid var(--border-gray);
+            border-left: 6px solid var(--primary-blue);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+        }
+
+        h2::after {
+            content: "";
+            flex-grow: 1;
+            height: 1px;
+            background: var(--accent-gold);
+            margin-left: 20px;
+        }
+
+        .highlight {
+            color: var(--primary-blue);
+            font-weight: 700;
+            background: linear-gradient(transparent 70%, var(--light-blue) 30%);
+        }
+
+        /* 圖片展示區塊 */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-top: 2rem;
+        }
+
+        .image-item {
+            position: relative;
+            background: #fff;
+            padding: 12px;
+            border: 1px solid var(--border-gray);
+            transition: all 0.4s ease;
+        }
+
+        .image-item:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-gold);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .image-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            filter: sepia(10%) contrast(95%); /* 增加復古和紙質感 */
+        }
+
+        .tag {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--primary-blue);
+            color: white;
+            padding: 3px 15px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            z-index: 1;
+        }
+
+        .image-caption {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: var(--primary-blue);
+            text-align: center;
+            border-top: 1px dashed var(--border-gray);
+            padding-top: 8px;
+        }
+
+        /* 底部 */
+        footer {
+            text-align: center;
+            padding: 5rem 2rem;
+            color: #718096;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        /* 響應式調整 */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.2rem; }
+            section { margin: 2rem 1rem; padding: 1.5rem; }
+            .vertical-text { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="seigaiha-bg"></div>
+    <div class="vertical-text">金融探求者</div>
+
+    <nav>
+        <div class="logo">胡昱強 JOHNNY</div>
+        <div class="nav-links">
+            <a href="#motivation">報考動機</a>
+            <a href="#experience">實作紀錄</a>
+            <a href="#reflection">自我反思</a>
+        </div>
+    </nav>
+
+    <header>
+        <p class="hero-subtitle">PORTFOLIO 2024</p>
+        <h1 class="hero-title">在市場波動中<br>尋找理性的定錨</h1>
+        <p>金融學系申請作品集</p>
+    </header>
+
+    <section id="motivation">
+        <h2>報考動機</h2>
+        <div class="content-text">
+            <p>我相信金融學系不僅僅是學習金錢數字的流動，更是一門<span class="highlight">解讀社會趨勢、掌握市場脈動</span>的系統性科學。我認為金融的核心在於預測與管理。</p>
+            <p>在充滿不確定性的現代社會中，無論是個人理財或是企業營運，都無法迴避風險。我渴望進入金融系，學習如何辨識、評估並管理這些風險。我認為，貴科系的價值不僅在於追求獲利，更在於能否洞察隱藏的財務陷阱，並在市場波動時做出<span class="highlight">冷靜且理性的決策</span>。</p>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2>實作紀錄 / 證事</h2>
+        <p>透過模擬操作與數據分析，將理論與實務結合：</p>
+        
+        <div class="image-grid">
+            <div class="image-item">
+                <div class="tag">實務操作</div>
+                <img src="https://images.unsplash.com/photo-1611974717482-4828036a575a?auto=format&fit=crop&q=80&w=800" alt="理財寶操作">
+                <div class="image-caption">理財寶模擬平台操作紀錄</div>
+            </div>
+
+            <div class="image-item">
+                <div class="tag">數據分析</div>
+                <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=800" alt="技術分析">
+                <div class="image-caption">K線圖與技術指標研讀</div>
+            </div>
+
+            <div class="image-item">
+                <div class="tag">自主學習</div>
+                <img src="https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&q=80&w=800" alt="金融書籍">
+                <div class="image-caption">金融基礎理論與趨勢研究</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reflection">
+        <h2>自我反思與未來</h2>
+        <div class="content-text">
+            <p>在實際操作的過程中，我體認到金融市場的起伏很大一部分來自於<span class="highlight">資訊的解讀</span>。大量的新聞與國際事件如同洪流，如何過濾雜訊、提取真正具有價值的資訊，是我現階段最大的挑戰。</p>
+            <p>因此，我為自己設定了下一階段的目標：<span class="highlight">提升資訊判讀能力與趨勢分析能力</span>。我不滿足於只是觀察數字的跳動，更希望能透過專業訓練，成長為具備前瞻性視野的金融人才。</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Johnny Hu 胡昱強 | 靜水流深，理財以恆</p>
+    </footer>
+
+    <script>
+        // 區塊滾動淡入效果 (Intersection Observer API)
+        const observerOptions = {
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // 導覽列平滑捲動
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
